@@ -140,7 +140,9 @@ def tests(session, api_backend):
             args.append("tests/")
     try:
         session.run(
-            "coverage", "run", "-m", "pytest", f"--salt-api-backend=rest_{api_backend}", *args
+            "coverage", "run", "-m", "pytest", f"--salt-api-backend=rest_{api_backend}", *args,
+            # https://github.com/pypa/setuptools/issues/3044
+            env={'SETUPTOOLS_USE_DISTUTILS': 'stdlib'}
         )
     finally:
         # Always combine and generate the XML coverage report
